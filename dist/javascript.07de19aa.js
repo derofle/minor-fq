@@ -113,7 +113,12 @@ window.onload = function () {
 
   var storyArray = []; // Blank player name to fill in later on, its global so it can be used anywhere
 
-  var playerName = ''; // This is the constructor of the Dialogue Objects
+  var playerName = ''; // Blank role array to fill in alter on, its global so it can be used anywhere
+
+  var roleArray = [];
+  var roleCount = 0;
+  var randomRole = {};
+  var randomName = ''; // This is the constructor of the Dialogue Objects
 
   function Dialogue(name, bg, text) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "speech";
@@ -149,7 +154,16 @@ window.onload = function () {
     addDialogue("Joksin Schura", "Appartment", "Sadly my knowledge about Earth also tells me that Earth does not have spaceship capable of going in to deep space just yet.");
     addDialogue("Joksin Schura", "Appartment", "But wait, someone else is intercepting my signal, maybe he can help you, ".concat(playerName, "!"));
     addDialogue("Joksin Schura", "Appartment", "Decrypt coded message!</br> Apply cesarean cypher to the signal and find out who else is intercepting my signal! The signal = PIFJSLIQ", "mission", "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Caesar3.svg/856px-Caesar3.svg.png\" id=\"cypherimg\"></img>\n             <input id=\"missionone\">\n            <button id=\"missiononebutton\" type=\"button\">Submit</button>\n             <p id=\"wrongInput\"></p>\n         ");
-    addDialogue("Slimvolt", "Lab", "Oh hello there! I'm Professor Slimvolt! I also retrieved the message from the alien Joksin and I think that I can help you!");
+    addDialogue("Slimvolt", "Lab", "Oh hello there, ".concat(playerName, "! I'm Professor Slimvolt! I also retrieved the message from the alien Joksin and I think that I can help you!"));
+    addDialogue("Slimvolt", "Lab", "I have a machine right here that can help you, wait let me get it, hold on for a second!");
+    addDialogue("none", "Lab", "Here I got it!");
+    addDialogue("Slimvolt", "Lab", "This here is what I call a Turbo Space Engine, it is one of a kind and it is probably able to bring you guys in to deeper space!");
+    addDialogue("Slimvolt", "Lab", "I just made it yesterday and I could use some guinea pigs, erhh, brave spacefarers to try it out, like you ".concat(playerName, "!"));
+    addDialogue("Slimvolt", "Lab", "But right now you guys do not seem up to that task, you don\u2019t seem like space farers and you don\u2019t have the resources to go in to space! So there is some stuff to do before I give you guys my Turbo Space Engine!");
+    addDialogue("Slimvolt", "Lab", "You cannot do this alone, ".concat(playerName, ", you need people to help you, for in space. So it\u2019s up to you guys to find people who are willing to help you on your journey! Good luck!"));
+    addDialogue("Slimvolt", "Lab", "Here will be the mission where they have to gather a crew and give them roles.", 'mission', "<label id=\"labelName\">Name: </label><input id=\"nameRoleInput\">\n        <label id=\"labelRole\">Role: </label><input id=\"roleRoleInput\">\n        <button id=\"roleInputButton\" type=\"button\">Add to crew</button>\n        <button id=\"roleInputDoneButton\" type=\"button\">Done making a crew</button>\n         <p id=\"added\"></p>\n         <p id=\"showcrew\"></p>\n         ");
+    addDialogue("Slimvolt", "Lab", "Are you sure you got your whole crew, ".concat(playerName, "?"), "confirm");
+    addDialogue("Slimvolt", "Lab", "I see, so this is your crew! I really like ".concat(randomName, " as the ").concat(randomRole, "!"));
     console.log(storyArray);
   } // Calling the startup refresh dialogue function
 
@@ -175,12 +189,14 @@ window.onload = function () {
       obj.sprite = "http://fqminor.nl/images/joksin.png";
     } else if (obj.name.includes("Slimvolt")) {
       obj.sprite = "http://fqminor.nl/images/slimvolt.png";
+    } else if (obj.name.includes("none")) {
+      obj.sprite = "";
     } // Changes the background to the background of the object
 
 
     document.body.style.backgroundImage = obj.bg; // Implements the information from the object into the HTML and adds the next button to it
 
-    if (obj.type.includes("speech")) {
+    if (obj.type.includes("speech") && obj.name.includes("none") == false) {
       screen.innerHTML = "\n                <img src=\"".concat(obj.sprite, "\" id=\"speechsprite\"></img>\n                <div id='speechname'><p>").concat(obj.name, "</p></div>\n                <div id='dialogue'><p id=\"paragraph\"></p></div>\n                <button id='next'>Next</button>\n                    ");
       var nextButton = document.getElementById('next').addEventListener("click", function () {
         nextPage();
@@ -197,6 +213,12 @@ window.onload = function () {
       var prevButton = document.getElementById('prev').addEventListener("click", function () {
         prevPage();
       });
+    } else if (obj.type.includes("speech") && obj.name.includes("none")) {
+      screen.innerHTML = "\n                <div id='dialogue'><p id=\"paragraph\"></p></div>\n                <button id='next'>Next</button>\n                    ";
+
+      var _nextButton2 = document.getElementById('next').addEventListener("click", function () {
+        nextPage();
+      });
     } // This is for the TypewriterJS, this will make sure that on the speech and confirm pages, the text is typed out
 
 
@@ -212,8 +234,8 @@ window.onload = function () {
       document.getElementById("dialogue").addEventListener("click", function () {
         typewriter.options.delay = 0;
       });
-      var text = obj.text;
-      typewriter.typeString(text).start();
+      var _text = obj.text;
+      typewriter.typeString(_text).start();
     } // This is more for debugging, so that you can switch pages with your arrow keys
 
 
@@ -226,19 +248,36 @@ window.onload = function () {
         case 39:
           nextPage();
           break;
+
+        case 32:
+          refreshDialogue();
+          break;
       }
     }; // This function is being called to go to the next page
 
 
     function nextPage() {
+      console.log(storyCounter);
+
       if (storyCounter >= storyArray.length) {} else {
         storyCounter = storyCounter + 1;
         showDialogue(storyArray[storyCounter - 1]);
+      }
+
+      if (storyCounter >= 22) {
+        randomCrew = roleArray[Math.floor(Math.random() * roleArray.length)];
+        randomName = randomCrew.name;
+        randomRole = randomCrew.role;
+        refreshDialogue();
+        console.log(randomCrew);
+        console.log(randomName);
       }
     } // Same but for previous page
 
 
     function prevPage() {
+      console.log(storyCounter);
+
       if (storyCounter <= 1) {} else {
         storyCounter = storyCounter - 1;
         showDialogue(storyArray[storyCounter - 1]);
@@ -247,7 +286,7 @@ window.onload = function () {
 
 
     if (storyCounter === 3) {
-      var inputNameButton = document.getElementById("inputNameButton").addEventListener("click", function () {
+      document.getElementById("inputNameButton").addEventListener("click", function () {
         var str = document.getElementById("inputName").value;
         console.log(str);
         playerName = str;
@@ -259,19 +298,39 @@ window.onload = function () {
 
 
     if (storyCounter === 13) {
-      var missiononebutton = document.getElementById("missiononebutton").addEventListener("click", function () {
+      document.getElementById("missiononebutton").addEventListener("click", function () {
         var text = "";
         var str = document.getElementById("missionone").value;
         var res = str.toUpperCase();
         console.log(res);
 
         if (res.includes("SLIMVOLT")) {
-          storyCounter = storyCounter + 1;
-          showDialogue(storyArray[storyCounter - 1]);
+          nextPage();
         } else {
           text = "Input wrong";
           document.getElementById("wrongInput").innerHTML = text;
         }
+      });
+    }
+
+    if (storyCounter === 21) {
+      document.getElementById("roleInputButton").addEventListener("click", function () {
+        var name = document.getElementById("nameRoleInput").value;
+        var role = document.getElementById("roleRoleInput").value;
+        roleArray.push({
+          name: name,
+          role: role
+        });
+        text = "Crewmember added";
+        document.getElementById("added").innerHTML = text;
+        array = roleArray;
+        document.getElementById("showcrew").innerHTML = "".concat(roleArray[roleCount].name, " ").concat(roleArray[roleCount].role, " ");
+        console.log(roleArray);
+        roleCount++;
+        console.log(roleCount);
+      });
+      document.getElementById("roleInputDoneButton").addEventListener("click", function () {
+        nextPage();
       });
     }
   }
@@ -303,7 +362,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49394" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49783" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

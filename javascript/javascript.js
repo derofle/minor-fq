@@ -10,6 +10,13 @@ window.onload = function() {
     let storyArray = [];
     // Blank player name to fill in later on, its global so it can be used anywhere
     let playerName = '';
+    // Blank role array to fill in alter on, its global so it can be used anywhere
+    let roleArray = [];
+
+    let roleCount = 0;
+
+    let randomRole = {};
+    let randomName = '';
 
     // This is the constructor of the Dialogue Objects
     function Dialogue (name, bg, text, type = `speech`, code = ``){
@@ -52,7 +59,23 @@ window.onload = function() {
             <button id="missiononebutton" type="button">Submit</button>
              <p id="wrongInput"></p>
          `);
-        addDialogue(`Slimvolt`, `Lab`, `Oh hello there! I'm Professor Slimvolt! I also retrieved the message from the alien Joksin and I think that I can help you!`);
+        addDialogue(`Slimvolt`, `Lab`, `Oh hello there, ${playerName}! I'm Professor Slimvolt! I also retrieved the message from the alien Joksin and I think that I can help you!`);
+        addDialogue(`Slimvolt`, `Lab`, `I have a machine right here that can help you, wait let me get it, hold on for a second!`);
+        addDialogue(`none`, `Lab`, `Here I got it!`);
+        addDialogue(`Slimvolt`, `Lab`, `This here is what I call a Turbo Space Engine, it is one of a kind and it is probably able to bring you guys in to deeper space!`);
+        addDialogue(`Slimvolt`, `Lab`, `I just made it yesterday and I could use some guinea pigs, erhh, brave spacefarers to try it out, like you ${playerName}!`);
+        addDialogue(`Slimvolt`, `Lab`, `But right now you guys do not seem up to that task, you don’t seem like space farers and you don’t have the resources to go in to space! So there is some stuff to do before I give you guys my Turbo Space Engine!`);
+        addDialogue(`Slimvolt`, `Lab`, `You cannot do this alone, ${playerName}, you need people to help you, for in space. So it’s up to you guys to find people who are willing to help you on your journey! Good luck!`);
+        addDialogue(`Slimvolt`, `Lab`, `Here will be the mission where they have to gather a crew and give them roles.`, 'mission', 
+        `<label id="labelName">Name: </label><input id="nameRoleInput">
+        <label id="labelRole">Role: </label><input id="roleRoleInput">
+        <button id="roleInputButton" type="button">Add to crew</button>
+        <button id="roleInputDoneButton" type="button">Done making a crew</button>
+         <p id="added"></p>
+         <p id="showcrew"></p>
+         `);
+         addDialogue(`Slimvolt`, `Lab`, `Are you sure you got your whole crew, ${playerName}?`, `confirm`);
+         addDialogue(`Slimvolt`, `Lab`, `I see, so this is your crew! I really like ${randomName} as the ${randomRole}!`);
         console.log(storyArray);
     }
     
@@ -81,13 +104,15 @@ window.onload = function() {
                 obj.sprite = "http://fqminor.nl/images/joksin.png";
             } else if (obj.name.includes(`Slimvolt`)) {
                 obj.sprite = "http://fqminor.nl/images/slimvolt.png";
+            } else if (obj.name.includes(`none`)) {
+                obj.sprite = "";
             }
 
             // Changes the background to the background of the object
             document.body.style.backgroundImage = obj.bg;
 
             // Implements the information from the object into the HTML and adds the next button to it
-            if (obj.type.includes(`speech`)) {
+            if (obj.type.includes(`speech`) && obj.name.includes("none") == false) {
                 screen.innerHTML = `
                 <img src="${obj.sprite}" id="speechsprite"></img>
                 <div id='speechname'><p>${obj.name}</p></div>
@@ -122,6 +147,17 @@ window.onload = function() {
 
                 let nextButton = document.getElementById('next').addEventListener(`click`, function () {nextPage();})
                 let prevButton = document.getElementById('prev').addEventListener(`click`, function () {prevPage();})   
+            } else if (obj.type.includes(`speech`) && obj.name.includes("none")) {
+                screen.innerHTML = `
+                <div id='dialogue'><p id="paragraph"></p></div>
+                <button id='next'>Next</button>
+                    `;
+                
+                
+                
+                let nextButton = document.getElementById('next').addEventListener(`click`, function () {
+                    nextPage();    
+                })
             }
 
             // This is for the TypewriterJS, this will make sure that on the speech and confirm pages, the text is typed out
@@ -154,20 +190,35 @@ window.onload = function() {
                     case 39:
                         nextPage();
                         break;
+                    case 32:
+                        refreshDialogue();
+                        break;
+                        
                 }
             };
 
             // This function is being called to go to the next page
             function nextPage() {
+                console.log(storyCounter);
                 if (storyCounter >= storyArray.length) {
                 } else {
                     storyCounter = storyCounter + 1;
                     showDialogue(storyArray[storyCounter - 1]);
                 }
+
+                if (storyCounter >= 22) {
+                    randomCrew = roleArray[Math.floor(Math.random()*roleArray.length)];
+                    randomName = randomCrew.name;
+                    randomRole = randomCrew.role;
+                    refreshDialogue();
+                    console.log(randomCrew);
+                    console.log(randomName);
+                }
             }
 
             // Same but for previous page
             function prevPage() {
+                console.log(storyCounter);
                 if (storyCounter <= 1) {
                 } else {
                     storyCounter = storyCounter - 1;
@@ -177,7 +228,7 @@ window.onload = function() {
 
             // This is a specific if statement for the 3rd page, so that you can input your name
             if (storyCounter === 3) {
-                let inputNameButton = document.getElementById("inputNameButton").addEventListener(`click`, function () {
+                document.getElementById("inputNameButton").addEventListener(`click`, function () {
                     let str = document.getElementById("inputName").value;
                     console.log(str);
                     playerName = str;
@@ -191,19 +242,46 @@ window.onload = function() {
 
             // This is a specific if statement for the 13th page, so that you can input the code and it checks if its right or wrong
             if (storyCounter === 13) {
-                let missiononebutton = document.getElementById("missiononebutton").addEventListener(`click`, function () {
+                document.getElementById("missiononebutton").addEventListener(`click`, function () {
                     let text = "";
                     let str = document.getElementById("missionone").value;
                     let res = str.toUpperCase();
                     console.log(res);
                     if(res.includes(`SLIMVOLT`)) {
-                        storyCounter = storyCounter + 1;
-                        showDialogue(storyArray[storyCounter - 1]);
+                        nextPage();
                     } else {
                         text = "Input wrong";
                         document.getElementById("wrongInput").innerHTML = text;
                     }    
                 })   
             }
+
+            if (storyCounter === 21) {
+                document.getElementById("roleInputButton").addEventListener(`click`, function () {
+                    let name = document.getElementById("nameRoleInput").value;
+                    let role = document.getElementById("roleRoleInput").value;
+                    roleArray.push( {
+                        name: name,
+                        role: role
+                    })
+                    text = "Crewmember added";
+                    document.getElementById("added").innerHTML = text;
+                    array = roleArray;
+                    document.getElementById("showcrew").innerHTML = `${roleArray[roleCount].name} ${roleArray[roleCount].role} `;
+                    console.log(roleArray);
+                    roleCount++;
+                    console.log(roleCount);
+            });
+                document.getElementById("roleInputDoneButton").addEventListener(`click`, function () {
+                    nextPage();
+
+            });
+
+        }
+        
     }  
+
+    
+
+    
 };
