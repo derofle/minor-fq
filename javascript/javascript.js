@@ -210,6 +210,7 @@ window.onload = function() {
 
             // This function is being called to go to the next page
             function nextPage() {
+                refreshDialogue();
                 console.log(storyCounter);
                 if (storyCounter >= stories.length) {
                 } else {
@@ -221,14 +222,12 @@ window.onload = function() {
                     randomCrew = crew[Math.floor(Math.random()*crew.length)];
                     randomName = randomCrew.name;
                     randomRole = randomCrew.role;
-                    refreshDialogue();
-                    console.log(randomCrew);
-                    console.log(randomName);
                 }
             }
 
             // Same but for previous page
             function prevPage() {
+                refreshDialogue();
                 console.log(storyCounter);
                 if (storyCounter <= 1) {
                 } else {
@@ -243,9 +242,7 @@ window.onload = function() {
                     let str = document.getElementById("inputName").value;
                     console.log(str);
                     playerName = str;
-                    refreshDialogue();
-                    storyCounter = storyCounter + 1;
-                    showDialogue(stories[storyCounter - 1]);
+                    nextPage();
                     
                 })
                 
