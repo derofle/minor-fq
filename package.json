@@ -1,0 +1,16 @@
+{
+  "name": "babel-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init-load": "npm install -g parcel-bundler && npm install",
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "babel-core": "^6.26.3"
+  }
+}
