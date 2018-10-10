@@ -79,7 +79,7 @@ window.onload = function() {
             if (obj.name.includes(`Joksin`)) {
                 obj.sprite = "http://fqminor.nl/images/joksin.png";
             } else if (obj.name.includes(`Slimvolt`)) {
-                obj.sprite = "http://fqminor.nl/images/joksin.png";
+                obj.sprite = "http://fqminor.nl/images/slimvolt.png";
             }
 
             // Changes the background to the background of the object
@@ -133,13 +133,10 @@ window.onload = function() {
                     delay: 30,
                 });
                 typewriter.options.delay = 25;
-                console.log(typewriter.options.delay);
                 document.getElementById("dialogue").addEventListener(`click`, function () {
-                    console.log("clicked");
                     typewriter.options.delay = 0;
                 })
                 const text = obj.text;
-                console.log(text);
                 typewriter.typeString(text)
                 .start();
             }
