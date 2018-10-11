@@ -1,5 +1,5 @@
 body {
-    background-image: url("https://i.imgur.com/dZUV5fi.jpg");
+    background-image: url("http://fqminor.nl/images/spacewindow.png");
     background-size: 100%;
 }
 
@@ -12,18 +12,18 @@ body {
     transform: translate(-50%, -50%);
 
     color: white;
-    background-color: #4CAF50;
+    background-color: rgba(23, 42, 128, 0.8);
     border: none;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
     font-size: 16px;
+    border: 3px solid black;
 }
 
 #next {
     color: white;
     background-color: rgba(23, 42, 128, 0.8);
-    border: none;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
@@ -50,7 +50,6 @@ body {
 
 #speechsprite {
     height: 500px;
-    width: 300px;
     bottom: 7%;
     left: 13%;
     position: absolute;
@@ -58,7 +57,6 @@ body {
 
 #missionsprite {
     height: 500px;
-    width: 300px;
     position: absolute;
     bottom: 10%;
     right: 5%;
@@ -69,7 +67,7 @@ body {
     bottom: 27%;
     left: 20%;
     position: absolute;
-    background-color: white;
+    background-color: rgba(206, 215, 255, 0.8);
     width: 200px;
     height: 35px;
     border: 3px solid black;
@@ -88,7 +86,7 @@ body {
     bottom: 17%;
     right: 30%;
     position: absolute;
-    background-color: white;
+    background-color: rgba(206, 215, 255, 0.8);
     width: 200px;
     height: 35px;
     border: 3px solid black;
@@ -198,4 +196,75 @@ body {
     position: absolute;
     width: 500px;
     left: 15%;
+}
+
+#nameRoleInput {
+    height: 50px;
+    width: 200px;
+    background-color: rgba(128, 128, 128, 0.8);
+    position: absolute;
+    bottom: 60%;
+    right: 43%;
+    font-size: 20px;
+    color: white;
+}
+
+#roleRoleInput {
+    height: 50px;
+    width: 200px;
+    background-color: rgba(128, 128, 128, 0.8);
+    position: absolute;
+    bottom: 40%;
+    right: 43%;
+    font-size: 20px;
+    color: white;
+}
+
+label {
+    width: 140px;
+    text-align: right;
+}
+
+#labelName {
+    position: absolute;
+    left: 25%;
+    top: 20%;
+    font-size: 20px;
+}
+
+#labelRole {
+    position: absolute;
+    left: 25%;
+    bottom: 52%;
+    font-size: 20px;
+}
+
+#roleInputButton {
+    position: absolute;
+    background-color: rgba(23, 42, 128, 0.8);
+    border: 3px solid black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    position: absolute;
+    bottom: 27%;
+    right: 47%;
+}
+
+#roleInputDoneButton {
+    position: absolute;
+    background-color: rgba(23, 42, 128, 0.8);
+    border: 3px solid black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    position: absolute;
+    bottom: 15%;
+    right: 43%;
 }
