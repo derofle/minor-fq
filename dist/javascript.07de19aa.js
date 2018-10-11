@@ -168,6 +168,28 @@ window.onload = function () {
     addDialogue("Slimvolt", "Lab", "Here will be the mission where they have to gather a crew and give them roles.", 'mission', "<label id=\"labelName\">Name: </label><input id=\"nameRoleInput\">\n                    <label id=\"labelRole\">Role: </label><input id=\"roleRoleInput\">\n                    <button id=\"roleInputButton\" type=\"button\">Add to crew</button>\n                    <button id=\"roleInputDoneButton\" type=\"button\">Done making a crew</button>\n                    <p id=\"added\"></p>\n                    <p id=\"showcrew\"></p>\n                    ");
     addDialogue("Slimvolt", "Lab", "Are you sure you got your whole crew, ".concat(playerName, "?"), "confirm");
     addDialogue("Slimvolt", "Lab", "I see, so this is your crew! I really like ".concat(randomName, " as the ").concat(randomRole, "!"));
+    addDialogue("Slimvolt", "Lab", "So you have your crew now, excellent! Now it is time for the real work!");
+    addDialogue("Slimvolt", "Lab", "It is now time for the most important part, without it you cannot even travel in to deeper space. We are of course talking about a spaceship! Because earth does not have a spaceship right now, you have to make one off your own!");
+    addDialogue("Slimvolt", "Lab", "Make a spaceship!", "mission");
+    addDialogue("Slimvolt", "Lab", "Oh wow, that looks like an amazing space ship, well done! Now you only need to name your space ship!");
+    addDialogue("Slimvolt", "Lab", "Fill in space ship name", "mission");
+    addDialogue("Slimvolt", "Lab", "Alright, the Super Space Ship! That sounds awesome! Now it only needs one thing more! The Turbo Space Engine! Here, attach it to your ship!");
+    addDialogue("Slimvolt", "Lab", "Attach Turbo Space Engine", "mission");
+    addDialogue("Slimvolt", "Lab", "Good work everyone, especially from ".concat(randomName, "! Now the time has come to go into space!"));
+    addDialogue("Slimvolt", "Lab", "Everyone, get into the spaceship! Fasten your seatbelts!");
+    addDialogue("Slimvolt", "Lab", "I\u2019m pressing the Launch button now, 3, 2 ,1 ...");
+    addDialogue("Slimvolt", "Lab", ".....");
+    addDialogue("Slimvolt", "Lab", "Wait, why is nothing happening?");
+    addDialogue("Slimvolt", "Lab", "Oh, flimsy doodle, I forgot a very important thing! The fuel of the ship!");
+    addDialogue("Slimvolt", "Lab", "Look, the ship cannot fly with a special fuel called Oobleck, without it it won\u2019t do anything! Make some Oobleck and after that report back to me!");
+    addDialogue("Slimvolt", "Lab", "Make Oobleck", "mission");
+    addDialogue("Slimvolt", "Lab", "Fantastic! You did it! Now it really is time to go in to space! I will stay here on Earth, to keep an eye out for any other alien activity! Good luck everyone!");
+    addDialogue("Slimvolt", "Lab", "Time for liftoff! 3, 2, 1 \u2026.");
+    addDialogue("none", "Boom", "Space related travel shit here.");
+    addDialogue("Joksin Schura", "Spaceship", "Hello space travellers, welcome in to space! Before we go any further, you should rest from your journey!");
+    addDialogue("Joksin Schura", "Spaceship", "It was a long trip and you need your energy for the rest of the adventure! So eat, drink, sleep untill you are rested up good, and after that I will see you!");
+    addDialogue("none", "Spaceship", "Pause related shit here."); // Crossing the Treshold
+
     console.log(stories);
   } // Calling the startup refresh dialogue function
 
@@ -186,6 +208,8 @@ window.onload = function () {
       obj.bg = "url('http://fqminor.nl/images/etheria.png')";
     } else if (obj.bg.includes("Boom")) {
       obj.bg = "url('http://fqminor.nl/images/2.png')";
+    } else if (obj.bg.includes("Spaceship")) {
+      obj.bg = "url('http://fqminor.nl/images/spacewindow.png')";
     } // Defines which sprite is going to used for the characters
 
 
@@ -363,7 +387,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49783" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63230" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
