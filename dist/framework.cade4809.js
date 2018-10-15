@@ -104,21 +104,22 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"javascript/javascript.js":[function(require,module,exports) {
+})({"javascript/framework.js":[function(require,module,exports) {
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 window.onload = function () {
-  // Getting the screen div from the HTML doc
-  var screen = document.getElementById("screen"); // StoryCounter keeps track of the position within the story without grasping into the story array.
-
-  var storyCounter = 1; // In the Story Array the pages will be saved and be navigated
-
-  var stories = []; // Blank player name to fill in later on, its global so it can be used anywhere
-
-  var playerName = ''; // Blank role array to fill in alter on, its global so it can be used anywhere
-
+  var screen = document.getElementById("screen");
+  var storyCounter = 1;
+  window.playerName = "";
   var crew = [];
-  var roleCount = 0;
-  var randomRole = {};
-  var randomName = ""; // This is the constructor of the Dialogue Objects
+  var stories = [];
+  var roleCount = 0; // This is the constructor of the Dialogue Objects
 
   function Dialogue(name, bg, text) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "speech";
@@ -136,68 +137,21 @@ window.onload = function () {
   function addDialogue(name, bg, text, type, code) {
     var d = new Dialogue(name, bg, text, type, code);
     stories.push(d);
-  } // This function clears the array and then adds the objects into the array again, can be called during the playthrough, to for example input the playerName
-
+  }
 
   function refreshDialogue() {
-    stories = []; // Ordinary world
+    stories = [];
 
-    addDialogue("Joksin Schura", "Appartment", "Hello?! Hello! Can you hear me? If you can read this message, please hit next in the lower right to let me know if I am not just talking to myself!");
-    addDialogue("Joksin Schura", "Appartment", "Oh, hi there! Good! Someone found my hidden message! I\u2019m Joksin Schura, and I need your help! But first, how can I call you? Please input your name on the next screen, so I know what to call you!");
-    addDialogue("Joksin Schura", "Appartment", "<b>Input your name!</b>", "mission", "<input id=\"inputName\">\n                    <button id=\"inputNameButton\" type=\"button\">Submit</button>\n                    ");
-    addDialogue("Joksin Schura", "Appartment", "Is it true that your name is ".concat(playerName, "? Otherwise click on the No button to go back and input your name again!"), "confirm");
-    addDialogue("Joksin Schura", "Appartment", "You were chosen to get this message and save Earth from this unfortunate fate, ".concat(playerName, "! You are the hero the universe and Earth needs!")); // Call to Adventure
+    for (var i = 0; i < storyTest.length; i++) {
+      addDialogue.apply(void 0, _toConsumableArray(storyTest[i]));
+    }
+  } // Getting the start button and using it to load the first object in the array
 
-    addDialogue("Joksin Schura", "Appartment", "Listen closely, ".concat(playerName, ", cause this message is only for you. You are the only one who can do this. You are the only one who can save Earth!\u201D"));
-    addDialogue("Joksin Schura", "Boom", "There are plans from outer space to blow up the Earth to construct a themepark, called Snarfland, on the place that Earth is now! Even though I like themeparks, I don't like blowing up planets for it!");
-    addDialogue("Joksin Schura", "Boom", "The ones behind these plans are called The Combined Supremacy, they convinced the Galactic Senate that Earth is a wasteland and there is no life to be found on it!");
-    addDialogue("Joksin Schura", "Appartment", "But that's absoluteley not true, cause otherwise I would not have been able to communicate with you!");
-    addDialogue("Joksin Schura", "Appartment", "You are the chosen one to save the Earth from this unfortunate faith!, ".concat(playerName, "!")); // Refusal of the Call
-
-    addDialogue("Joksin Schura", "Appartment", "Sadly my knowledge about Earth also tells me that Earth does not have spaceship capable of going in to deep space just yet.");
-    addDialogue("Joksin Schura", "Appartment", "But wait, someone else is intercepting my signal, maybe he can help you, ".concat(playerName, "!"));
-    addDialogue("Joksin Schura", "Appartment", "Decrypt coded message!</br> Apply cesarean cypher to the signal and find out who else is intercepting my signal! The signal = PIFJSLIQ", "mission", "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Caesar3.svg/856px-Caesar3.svg.png\" id=\"cypherimg\"></img>\n                    <input id=\"missionone\">\n                    <button id=\"missiononebutton\" type=\"button\">Submit</button>\n                    <p id=\"wrongInput\"></p>\n                    "); // Meeting the mentor
-
-    addDialogue("Slimvolt", "Lab", "Oh hello there, ".concat(playerName, "! I'm Professor Slimvolt! I also retrieved the message from the alien Joksin and I think that I can help you!"));
-    addDialogue("Slimvolt", "Lab", "I have a machine right here that can help you, wait let me get it, hold on for a second!");
-    addDialogue("none", "Lab", "Here I got it!");
-    addDialogue("Slimvolt", "Lab", "This here is what I call a Turbo Space Engine, it is one of a kind and it is probably able to bring you guys in to deeper space!");
-    addDialogue("Slimvolt", "Lab", "I just made it yesterday and I could use some guinea pigs, erhh, brave spacefarers to try it out, like you ".concat(playerName, "!"));
-    addDialogue("Slimvolt", "Lab", "But right now you guys do not seem up to that task, you don\u2019t seem like space farers and you don\u2019t have the resources to go in to space! So there is some stuff to do before I give you guys my Turbo Space Engine!");
-    addDialogue("Slimvolt", "Lab", "You cannot do this alone, ".concat(playerName, ", you need people to help you, for in space. So it\u2019s up to you guys to find people who are willing to help you on your journey! Good luck!"));
-    addDialogue("Slimvolt", "Lab", "Here will be the mission where they have to gather a crew and give them roles.", 'mission', "<label id=\"labelName\">Name: </label><input id=\"nameRoleInput\">\n                    <label id=\"labelRole\">Role: </label><input id=\"roleRoleInput\">\n                    <button id=\"roleInputButton\" type=\"button\">Add to crew</button>\n                    <button id=\"roleInputDoneButton\" type=\"button\">Done making a crew</button>\n                    <p id=\"added\"></p>\n                    <p id=\"showcrew\"></p>\n                    ");
-    addDialogue("Slimvolt", "Lab", "Are you sure you got your whole crew, ".concat(playerName, "?"), "confirm");
-    addDialogue("Slimvolt", "Lab", "I see, so this is your crew! I really like ".concat(randomName, " as the ").concat(randomRole, "!"));
-    addDialogue("Slimvolt", "Lab", "So you have your crew now, excellent! Now it is time for the real work!");
-    addDialogue("Slimvolt", "Lab", "It is now time for the most important part, without it you cannot even travel in to deeper space. We are of course talking about a spaceship! Because earth does not have a spaceship right now, you have to make one off your own!");
-    addDialogue("Slimvolt", "Lab", "Make a spaceship!", "mission");
-    addDialogue("Slimvolt", "Lab", "Oh wow, that looks like an amazing space ship, well done! Now you only need to name your space ship!");
-    addDialogue("Slimvolt", "Lab", "Fill in space ship name", "mission");
-    addDialogue("Slimvolt", "Lab", "Alright, the Super Space Ship! That sounds awesome! Now it only needs one thing more! The Turbo Space Engine! Here, attach it to your ship!");
-    addDialogue("Slimvolt", "Lab", "Attach Turbo Space Engine", "mission");
-    addDialogue("Slimvolt", "Lab", "Good work everyone, especially from ".concat(randomName, "! Now the time has come to go into space!"));
-    addDialogue("Slimvolt", "Lab", "Everyone, get into the spaceship! Fasten your seatbelts!");
-    addDialogue("Slimvolt", "Lab", "I\u2019m pressing the Launch button now, 3, 2 ,1 ...");
-    addDialogue("Slimvolt", "Lab", ".....");
-    addDialogue("Slimvolt", "Lab", "Wait, why is nothing happening?");
-    addDialogue("Slimvolt", "Lab", "Oh, flimsy doodle, I forgot a very important thing! The fuel of the ship!");
-    addDialogue("Slimvolt", "Lab", "Look, the ship cannot fly with a special fuel called Oobleck, without it it won\u2019t do anything! Make some Oobleck and after that report back to me!");
-    addDialogue("Slimvolt", "Lab", "Make Oobleck", "mission");
-    addDialogue("Slimvolt", "Lab", "Fantastic! You did it! Now it really is time to go in to space! I will stay here on Earth, to keep an eye out for any other alien activity! Good luck everyone!");
-    addDialogue("Slimvolt", "Lab", "Time for liftoff! 3, 2, 1 \u2026.");
-    addDialogue("none", "Boom", "Space related travel shit here.");
-    addDialogue("Joksin Schura", "Spaceship", "Hello space travellers, welcome in to space! Before we go any further, you should rest from your journey!");
-    addDialogue("Joksin Schura", "Spaceship", "It was a long trip and you need your energy for the rest of the adventure! So eat, drink, sleep untill you are rested up good, and after that I will see you!");
-    addDialogue("none", "Spaceship", "Pause related shit here."); // Crossing the Treshold
-
-    console.log(stories);
-  } // Calling the startup refresh dialogue function
-
-
-  refreshDialogue(); // Getting the start button and using it to load the first object in the array
 
   document.getElementById('startButton').addEventListener("click", function () {
+    refreshDialogue();
     showDialogue(stories[0]);
+    console.log(playerName);
   }); // The actual function to show the objects on the screen
 
   function showDialogue(obj) {
@@ -387,7 +341,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49917" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64360" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
@@ -529,5 +483,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","javascript/javascript.js"], null)
-//# sourceMappingURL=/javascript.07de19aa.map
+},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","javascript/framework.js"], null)
+//# sourceMappingURL=/framework.cade4809.map
