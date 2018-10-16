@@ -11,6 +11,14 @@
   "keywords": [],
   "author": "",
   "devDependencies": {
-    "babel-core": "^6.26.3"
+    "babel-core": "^6.26.3",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "story": "^1.0.0",
+    "typewriter-effect": "^2.4.6"
   }
 }
