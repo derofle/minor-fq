@@ -43,8 +43,8 @@ window.onload = function () {
 	function refreshDialogue() {
 		stories = [];
 		initializeStory();
-		for (let i = 0; i < storyTest.length; i++) {
-			addDialogue(...storyTest[i]);
+		for (let i = 0; i < window.storyParts.length; i++) {
+			addDialogue(...window.storyParts[i]);
 		}
 	}
 
@@ -82,16 +82,13 @@ window.onload = function () {
                     `;
 
 			document.getElementById("next").addEventListener(`click`, () => { nextPage(); });
-
-
 		} else if (obj.type.includes(`mission`)) {
 			screen.innerHTML = `
                 <img src="${obj.sprite}" id="missionsprite"></img>
                 <div id='missionname'><p>${obj.name}</p></div>
                 <div id='mission'><p>${obj.text}</p><div id="codediv">${obj.code}</div></div>
                     `;
-
-		} else if (obj.type.includes(`confirm`)){
+		} else if (obj.type.includes(`confirm`)) {
 			screen.innerHTML = `
                 <img src="${obj.sprite}" id="speechsprite"></img>
                 <div id='speechname'><p>${obj.name}</p></div>
@@ -100,8 +97,8 @@ window.onload = function () {
                 <button id='prev'>No</button>
                     `;
 
-			document.getElementById('next').addEventListener(`click`, function () {nextPage();})
-			document.getElementById('prev').addEventListener(`click`, function () {prevPage();})
+			document.getElementById("next").addEventListener(`click`, () => { nextPage(); });
+			document.getElementById("prev").addEventListener(`click`, () => { prevPage(); });
 		} else if (obj.type.includes(`speech`) && obj.name.includes("none")) {
 			screen.innerHTML = `
                 <div id='dialogue'><p id="paragraph"></p></div>
@@ -109,7 +106,7 @@ window.onload = function () {
                     `;
 
 
-			let nextButton = document.getElementById('next').addEventListener(`click`, function () {nextPage();})
+			document.getElementById("next").addEventListener(`click`, () => { nextPage(); });
 		}
 
 
@@ -117,11 +114,11 @@ window.onload = function () {
 			target = document.getElementById(`paragraph`);
 			createTypewriter(target);
 			typewriter.options.delay = 35;
-			document.getElementById("dialogue").addEventListener(`click`, function () {
+			document.getElementById("dialogue").addEventListener(`click`, () => {
 				typewriter.options.delay = 0;
-			})
-			const text = obj.text;
-			typewriter.typeString(text)
+			});
+			const str = obj.text;
+			typewriter.typeString(str)
 				.start();
 		}
 
@@ -132,11 +129,11 @@ window.onload = function () {
 		if (obj.type.includes(`missionTwo`)) {
 			missionTwo();
 		}
+		/*
 		if (obj.type.includes(`missionThree`)) {
 			missionThree();
-		}
-
-
+        }
+        */
 	}
 
 	document.getElementById("startButton").addEventListener(`click`, () => {
@@ -144,28 +141,32 @@ window.onload = function () {
 		showDialogue(stories[0]);
 	});
 
-	nextPage = function() {
+	nextPage = function () {
 		refreshDialogue();
 		if (storyCounter >= stories.length) {
+			// empty
 		} else {
-			storyCounter = storyCounter + 1;
+			storyCounter += 1;
 			showDialogue(stories[storyCounter - 1]);
 		}
+		/*
 		if (storyCounter >= 22) {
 			randomCrew = crew[Math.floor(Math.random()*crew.length)];
 			randomName = randomCrew.name;
 			randomRole = randomCrew.role;
-		}
-	}
+        }
+        */
+	};
 
-	prevPage = function() {
+	prevPage = function () {
 		refreshDialogue();
 		if (storyCounter <= 1) {
+			// empty
 		} else {
-			storyCounter = storyCounter - 1;
+			storyCounter -= 1;
 			showDialogue(stories[storyCounter - 1]);
 		}
-	}
+	};
 };
 
 export { nextPage, prevPage };
