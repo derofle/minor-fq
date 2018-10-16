@@ -1,14 +1,15 @@
-
+// module "story.js"
 
 window.randomName = ``;
 window.randomRole = ``;
-playerName = window.playerName;
+window.storyTest = [];
 
-window.storyTest = [
+function initializeStory () {
+     storyTest = [
         // Ordinary World
         [`Joksin Schura`, `Appartment`, `Hello?! Hello! Can you hear me? If you can read this message, please hit next in the lower right to let me know if I am not just talking to myself!`],
         [`Joksin Schura`, `Appartment`, `Oh, hi there! Good! Someone found my hidden message! I’m Joksin Schura, and I need your help! But first, how can I call you? Please input your name on the next screen, so I know what to call you!`],
-        [`Joksin Schura`, `Appartment`, `<b>Input your name!</b>`, `mission`, 
+        [`Joksin Schura`, `Appartment`, `<b>Input your name!</b>`, `missionOne`, 
         `<input id="inputName">
         <button id="inputNameButton" type="button">Submit</button>
         `],
@@ -26,7 +27,7 @@ window.storyTest = [
         // Refusal of the Call
         [`Joksin Schura`, `Appartment`, `Sadly my knowledge about Earth also tells me that Earth does not have spaceship capable of going in to deep space just yet.`],
         [`Joksin Schura`, `Appartment`, `But wait, someone else is intercepting my signal, maybe he can help you, ${playerName}!`],
-        [`Joksin Schura`, `Appartment`, `Decrypt coded message!</br> Apply cesarean cypher to the signal and find out who else is intercepting my signal! The signal = PIFJSLIQ`, `mission`, 
+        [`Joksin Schura`, `Appartment`, `Decrypt coded message!</br> Apply cesarean cypher to the signal and find out who else is intercepting my signal! The signal = PIFJSLIQ`, `missionTwo`, 
         `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Caesar3.svg/856px-Caesar3.svg.png" id="cypherimg"></img>
         <input id="missionone">
         <button id="missiononebutton" type="button">Submit</button>
@@ -41,7 +42,7 @@ window.storyTest = [
         [`Slimvolt`, `Lab`, `I just made it yesterday and I could use some guinea pigs, erhh, brave spacefarers to try it out, like you ${playerName}!`],
         [`Slimvolt`, `Lab`, `But right now you guys do not seem up to that task, you don’t seem like space farers and you don’t have the resources to go in to space! So there is some stuff to do before I give you guys my Turbo Space Engine!`],
         [`Slimvolt`, `Lab`, `You cannot do this alone, ${playerName}, you need people to help you, for in space. So it’s up to you guys to find people who are willing to help you on your journey! Good luck!`],
-        [`Slimvolt`, `Lab`, `Here will be the mission where they have to gather a crew and give them roles.`, 'mission', 
+        [`Slimvolt`, `Lab`, `Here will be the mission where they have to gather a crew and give them roles.`, 'missionThree', 
         `<label id="labelName">Name: </label><input id="nameRoleInput">
         <label id="labelRole">Role: </label><input id="roleRoleInput">
         <button id="roleInputButton" type="button">Add to crew</button>
@@ -75,6 +76,9 @@ window.storyTest = [
         // Crossing the Treshold
         
 
-    ];
+];
+}
 
-    console.log(storyTest);
+export { initializeStory };
+
+    

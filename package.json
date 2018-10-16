@@ -12,5 +12,8 @@
   "author": "",
   "devDependencies": {
     "babel-core": "^6.26.3"
+  },
+  "dependencies": {
+    "story": "^1.0.0"
   }
 }

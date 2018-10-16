@@ -1,26 +1,46 @@
+// module "framework.js"
+import { initializeStory } from './story';
+import { missionOne, missionTwo, missionThree } from './missions';
+import { debug } from './debug';
+
+var nextPage;
+var prevPage;
+var storyCounter = 1;
+window.playerName = ``;
+window.crew = [];
+var stories = [];
+var roleCount = 0;
+
 window.onload = function() {
-
     
-    const screen = document.getElementById(`screen`);
+    debug();
 
-    let storyCounter = 1;
-    window.playerName = ``;
+    document.getElementById('startButton').addEventListener(`click`, function (){
+        refreshDialogue();
+        showDialogue(stories[0]);
+    });
     
-    let crew = [];
-    let stories = [];
-    let roleCount = 0;
+    let typewriter;
+    let target;
+    
+    function createTypewriter () {  
+        typewriter = new Typewriter(target, {
+            loop: false,
+            autoStart: true,
+            cursor: `▄`,
+            delay: 35,
+        });
+    }
 
-    // This is the constructor of the Dialogue Objects
     function Dialogue (name, bg, text, type = `speech`, code = ``){
             this.name = name;
             this.sprite = name;
             this.bg = bg;
-            this.text = text;   
+            this.text = text;
             this.type = type;
             this.code = code;
     };
 
-    // This calls the constructor and after that puts them in the Story Array
     function addDialogue (name, bg, text, type, code) {
         var d = new Dialogue(name, bg, text, type, code);
         stories.push(d);
@@ -28,24 +48,17 @@ window.onload = function() {
 
     function refreshDialogue () {
         stories = [];
+        initializeStory();
         for (let i = 0; i < storyTest.length; i++) {
             addDialogue(...storyTest[i]);
         }
     }
+
     
 
-
-    // Getting the start button and using it to load the first object in the array
-    document.getElementById('startButton').addEventListener(`click`, function (){
-        refreshDialogue();
-        showDialogue(stories[0]);
-        console.log(playerName);
-    });
-
-    // The actual function to show the objects on the screen
     function showDialogue (obj) {
+            const screen = document.getElementById(`screen`);
 
-            // Defines what background is going to be used.
             if (obj.bg.includes(`Appartment`)) {
                 obj.bg = "url('http://fqminor.nl/images/spaceship.png')";
             } else if (obj.bg.includes(`Lab`)) {
@@ -56,7 +69,6 @@ window.onload = function() {
                 obj.bg = "url('http://fqminor.nl/images/spacewindow.png')";
             }
         
-            // Defines which sprite is going to used for the characters
             if (obj.name.includes(`Joksin`)) {
                 obj.sprite = "http://fqminor.nl/images/joksin.png";
             } else if (obj.name.includes(`Slimvolt`)) {
@@ -65,10 +77,8 @@ window.onload = function() {
                 obj.sprite = "";
             }
 
-            // Changes the background to the background of the object
             document.body.style.backgroundImage = obj.bg;
 
-            // Implements the information from the object into the HTML and adds the next button to it
             if (obj.type.includes(`speech`) && obj.name.includes("none") == false) {
                 screen.innerHTML = `
                 <img src="${obj.sprite}" id="speechsprite"></img>
@@ -77,14 +87,9 @@ window.onload = function() {
                 <button id='next'>Next</button>
                     `;
                 
-                
-                
-                let nextButton = document.getElementById('next').addEventListener(`click`, function () {
-                    nextPage();    
-                })
+                document.getElementById('next').addEventListener(`click`, function () {nextPage();})
 
 
-            // This will load the HTML for the missions, mostly the difference is the ID's that are being used in CSS
             } else if (obj.type.includes(`mission`)) {
                 screen.innerHTML = `
                 <img src="${obj.sprite}" id="missionsprite"></img>
@@ -92,7 +97,6 @@ window.onload = function() {
                 <div id='mission'><p>${obj.text}</p><div id="codediv">${obj.code}</div></div>
                     `;
                 
-            // If its a confirm page, there will also be a previous button present
             } else if (obj.type.includes(`confirm`)){
                 screen.innerHTML = `
                 <img src="${obj.sprite}" id="speechsprite"></img>
@@ -102,8 +106,8 @@ window.onload = function() {
                 <button id='prev'>No</button>
                     `;
 
-                let nextButton = document.getElementById('next').addEventListener(`click`, function () {nextPage();})
-                let prevButton = document.getElementById('prev').addEventListener(`click`, function () {prevPage();})   
+                document.getElementById('next').addEventListener(`click`, function () {nextPage();})
+                document.getElementById('prev').addEventListener(`click`, function () {prevPage();})   
             } else if (obj.type.includes(`speech`) && obj.name.includes("none")) {
                 screen.innerHTML = `
                 <div id='dialogue'><p id="paragraph"></p></div>
@@ -112,19 +116,13 @@ window.onload = function() {
                 
                 
                 
-                let nextButton = document.getElementById('next').addEventListener(`click`, function () {
-                    nextPage();    
-                })
+                let nextButton = document.getElementById('next').addEventListener(`click`, function () {nextPage();})
             }
-            // This is for the TypewriterJS, this will make sure that on the speech and confirm pages, the text is typed out
+
+
             if (obj.type.includes(`speech`) || obj.type.includes(`confirm`)) {
-            const p = document.getElementById(`paragraph`);
-                let typewriter = new Typewriter(p, {
-                    loop: false,
-                    autoStart: true,
-                    cursor: `▄`,
-                    delay: 35,
-                });
+                target = document.getElementById(`paragraph`);
+                createTypewriter(target);
                 typewriter.options.delay = 35;
                 document.getElementById("dialogue").addEventListener(`click`, function () {
                     typewriter.options.delay = 0;
@@ -135,106 +133,39 @@ window.onload = function() {
             }
             
 
-            
-
-            // This is more for debugging, so that you can switch pages with your arrow keys
-            document.onkeydown = function(e) {
-                switch (e.keyCode) {
-                    case 37:
-                        prevPage();
-                        break;
-                    case 39:
-                        nextPage();
-                        break;
-                    case 32:
-                        refreshDialogue();
-                        break;
-                        
-                }
-            };
-
-            // This function is being called to go to the next page
-            function nextPage() {
-                refreshDialogue();
-                console.log(storyCounter);
-                if (storyCounter >= stories.length) {
-                } else {
-                    storyCounter = storyCounter + 1;
-                    showDialogue(stories[storyCounter - 1]);
-                }
-
-                if (storyCounter >= 22) {
-                    randomCrew = crew[Math.floor(Math.random()*crew.length)];
-                    randomName = randomCrew.name;
-                    randomRole = randomCrew.role;
-                }
+            if (obj.type.includes(`missionOne`)) {
+                missionOne(); 
             }
-
-            // Same but for previous page
-            function prevPage() {
-                refreshDialogue();
-                console.log(storyCounter);
-                if (storyCounter <= 1) {
-                } else {
-                    storyCounter = storyCounter - 1;
-                    showDialogue(stories[storyCounter - 1]);
-                }
+            if (obj.type.includes(`missionTwo`)) { 
+                missionTwo();
             }
-
-            // This is a specific if statement for the 3rd page, so that you can input your name
-            if (storyCounter === 3) {
-                document.getElementById("inputNameButton").addEventListener(`click`, function () {
-                    let str = document.getElementById("inputName").value;
-                    console.log(str);
-                    playerName = str;
-                    nextPage();
-                    
-                })
-                
-            }
-
-            // This is a specific if statement for the 13th page, so that you can input the code and it checks if its right or wrong
-            if (storyCounter === 13) {
-                document.getElementById("missiononebutton").addEventListener(`click`, function () {
-                    let text = "";
-                    let str = document.getElementById("missionone").value;
-                    let res = str.toUpperCase();
-                    console.log(res);
-                    if(res.includes(`SLIMVOLT`)) {
-                        nextPage();
-                    } else {
-                        text = "Input wrong";
-                        document.getElementById("wrongInput").innerHTML = text;
-                    }    
-                })   
-            }
-
-            if (storyCounter === 21) {
-                document.getElementById("roleInputButton").addEventListener(`click`, function () {
-                    let name = document.getElementById("nameRoleInput").value;
-                    let role = document.getElementById("roleRoleInput").value;
-                    crew.push( {
-                        name: name,
-                        role: role
-                    })
-                    text = "Crewmember added";
-                    document.getElementById("added").innerHTML = text;
-                    array = crew;
-                    document.getElementById("showcrew").innerHTML = `${crew[roleCount].name} ${crew[roleCount].role} `;
-                    console.log(crew);
-                    roleCount++;
-                    console.log(roleCount);
-            });
-                document.getElementById("roleInputDoneButton").addEventListener(`click`, function () {
-                    nextPage();
-
-            });
-
-        }
-        
+            if (obj.type.includes(`missionThree`)) {
+                missionThree();
+        }   
     }  
 
-    
+    nextPage = function() {
+        refreshDialogue();
+        if (storyCounter >= stories.length) {
+        } else {
+            storyCounter = storyCounter + 1;
+            showDialogue(stories[storyCounter - 1]);
+        }
+        if (storyCounter >= 22) {
+            randomCrew = crew[Math.floor(Math.random()*crew.length)];
+            randomName = randomCrew.name;
+            randomRole = randomCrew.role;
+        }
+    }
 
-    
+    prevPage = function() {
+        refreshDialogue();
+        if (storyCounter <= 1) {
+        } else {
+            storyCounter = storyCounter - 1;
+            showDialogue(stories[storyCounter - 1]);
+        }
+    }
 };
+
+export { nextPage, prevPage };
