@@ -2,6 +2,7 @@
 import { initializeStory } from './story';
 import { missionOne, missionTwo, missionThree } from './missions';
 import { debug } from './debug';
+import Typewriter from 'typewriter-effect/dist/core';
 
 var nextPage;
 var prevPage;

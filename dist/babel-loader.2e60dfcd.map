@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.js"],"names":["word","console","log"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,IAAIA,OAAO,QAAX;AACAC,QAAQC,GAAR,CAAY,QAAZ,EAAsBF,IAAtB","file":"babel-loader.2e60dfcd.map","sourceRoot":"..","sourcesContent":["let word = \"World!\";\r\nconsole.log(\"Hello \", word);"]}
