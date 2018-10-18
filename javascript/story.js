@@ -6,7 +6,7 @@ window.randomRole = ``;
 window.storyParts = [];
 
 export default function initializeStory() {
-	if (taal.includes("english")) {
+	if (languageStory.includes("english")) {
 		storyParts = [
 		// Ordinary World
 			[`Joksin Schura`, `Appartment`, `Hello?! Hello! Can you hear me? If you can read this message, please hit next in the lower right to let me know if I am not just talking to myself!`],
@@ -79,17 +79,17 @@ export default function initializeStory() {
 		];
 	}
 
-	if (taal.includes("dutch")) {
+	if (languageStory.includes("dutch")) {
 		storyParts = [
 		// Ordinary World
 			[`Joksin Schura`, `Appartment`, `Hallo?! Hallo! Kan je me horen? Als je dit bericht kan lezen, klik dan alsjeblieft op de knop rechtsonderin om te laten weten of je er bent!`],
-			[`Joksin Schura`, `Appartment`, `Oh, hi there! Good! Someone found my hidden message! I’m Joksin Schura, and I need your help! But first, how can I call you? Please input your name on the next screen, so I know what to call you!`],
-			[`Joksin Schura`, `Appartment`, `<b>Input your name!</b>`, `missionOne`,
+			[`Joksin Schura`, `Appartment`, `Oh, hallo daar! Mooizo! Iemand heeft mijn geheime boodschap ontvangen! Ik ben Joksin Schura en ik heb jouw hulp nodig! Maar eerst, hoe moet ik jou noemen? Vul je naam in op de volgende pagina!`],
+			[`Joksin Schura`, `Appartment`, `<b>Vul je naam in!</b>`, `missionOne`,
 				`<input id="inputName">
-                        <button id="inputNameButton" type="button">Submit</button>
+                        <button id="inputNameButton" type="button">Verstuur</button>
                         `],
 
-			[`Joksin Schura`, `Appartment`, `Is it true that your name is ${playerName}? Otherwise click on the No button to go back and input your name again!`, `confirm`],
+			[`Joksin Schura`, `Appartment`, `Klopt het dat je naam ${playerName} is? Anders kan je nu nog snel terug gaan om het opnieuw in te voeren!`, `confirm`],
 			[`Joksin Schura`, `Appartment`, `You were chosen to get this message and save Earth from this unfortunate fate, ${playerName}! You are the hero the universe and Earth needs!`],
 
 			// Call to Adventure

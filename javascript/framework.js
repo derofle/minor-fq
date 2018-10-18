@@ -10,7 +10,7 @@ var storyCounter = 1;
 var stories = [];
 window.playerName = ``;
 window.crew = [];
-window.taal = "";
+window.languageStory = "";
 
 
 window.onload = function () {
@@ -138,13 +138,13 @@ window.onload = function () {
 	}
 
 	document.getElementById("startButtonEnglish").addEventListener(`click`, () => {
-		window.taal = "english";
+		window.languageStory = "english";
 		refreshDialogue();
 		showDialogue(stories[0]);
 	});
 
 	document.getElementById("startButtonDutch").addEventListener(`click`, () => {
-		window.taal = "dutch";
+		window.languageStory = "dutch";
 		refreshDialogue();
 		showDialogue(stories[0]);
 	});
